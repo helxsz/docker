@@ -23,7 +23,7 @@ CMD ["/bin/bash"]
 # http://localhost:8080
 
 
-/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////   http://blog.thestateofme.com/2014/01/03/node-red-on-docker/
 FROM ubuntu:quantal
  
 RUN apt-get update
