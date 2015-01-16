@@ -1,0 +1,79 @@
+// https://registry.hub.docker.com/u/komljen/nodejs/dockerfile/
+
+FROM dockerfile/ubuntu
+
+RUN   \
+  apt-get -y -qq install python
+
+# Install Node
+
+RUN \
+  add-apt-repository -y ppa:chris-lea/node.js && \
+  apt-get update && \
+  apt-get -y install \
+          nodejs && \
+  rm -rf /var/lib/apt/lists/*
+
+
+// http://seanmcgary.com/posts/deploying-a-nodejs-application-using-docker
+
+FROM ubuntu:13.10
+
+# make sure apt is up to date
+RUN apt-get update
+
+# install nodejs and npm
+RUN apt-get install -y nodejs npm git git-core
+
+
+
+//https://registry.hub.docker.com/u/dockerfile/nodejs/dockerfile/
+# Pull base image.
+FROM dockerfile/python
+
+# Install Node.js
+RUN \
+  cd /tmp && \
+  wget http://nodejs.org/dist/node-latest.tar.gz && \
+  tar xvzf node-latest.tar.gz && \
+  rm -f node-latest.tar.gz && \
+  cd node-v* && \
+  ./configure && \
+  CXX="g++ -Wno-unused-local-typedefs" make && \
+  CXX="g++ -Wno-unused-local-typedefs" make install && \
+  cd /tmp && \
+  rm -rf /tmp/node-v* && \
+  npm install -g npm && \
+  echo -e '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
+
+# Define working directory.
+WORKDIR /data
+
+# Define default command.
+CMD ["bash"]
+
+
+
+
+//https://registry.hub.docker.com/u/truongsinh/nodejs-mongodb-redis/dockerfile/
+FROM truongsinh/nodejs
+
+MAINTAINER TruongSinh Tran-Nguyen <i@truongsinh.pro>
+
+# Fix upstart under a virtual host https://github.com/dotcloud/docker/issues/1024
+RUN dpkg-divert --local --rename --add /sbin/initctl \
+ && ln -s /bin/true /sbin/initctl
+
+# Configure Package Management System (APT) & install MongoDB
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 \
+ && echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list \
+ && apt-get update \
+ && apt-get install -y mongodb-10gen
+
+# Redis server
+RUN apt-get install -y redis-server
+
+# Start MongoDB
+CMD mongod --fork -f /etc/mongodb.conf \
+ && redis-server /etc/redis/redis.conf \
+ && bash  
