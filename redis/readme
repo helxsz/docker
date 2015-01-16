@@ -1,3 +1,8 @@
+docker run -d --name="myredis" -p 6379:6379 dockerfile/redis
+
+
+
+
 https://github.com/docker-library/redis/blob/062335e0a8d20cab2041f25dfff2fbaf58544471/2.8/Dockerfile
 
 https://registry.hub.docker.com/_/redis/

@@ -1,2 +1,3 @@
 https://github.com/toke/docker-mosquitto/blob/master/Dockerfile
 
+docker build -t helxsz/mqtt

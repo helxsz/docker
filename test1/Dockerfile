@@ -1,7 +1,7 @@
 FROM dockerfile/ubuntu
 
-#RUN add-apt-repository -y ppa:chris-lea/node.js -y
-#RUN apt-get -qq update 
+RUN add-apt-repository -y ppa:chris-lea/node.js -y
+RUN apt-get -qq update 
 
 
 # install nodejs and npm
