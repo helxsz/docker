@@ -1,10 +1,4 @@
-FROM dockerfile/ubuntu
-
-#RUN add-apt-repository -y ppa:chris-lea/node.js -y
-#RUN apt-get -qq update 
-
-# install nodejs and npm
-RUN apt-get install -y nodejs npm git-core
+FROM dockerfile/nodejs
 
 # Set the working directory
 WORKDIR   /src

@@ -15,3 +15,6 @@ CMD ["/bin/bash"]
 # npm install
 # node app.js
 # http://localhost:8080
+
+# docker run -it -p 8080:3000 -v /home/sizhexi/docker/test1:/src test14
+# docker run -it -p 8080:3000 -v /home/sizhexi/docker/test1:/src test1 
