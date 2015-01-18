@@ -21,7 +21,7 @@ app.configure(function() {
 
 app.get('/', function(req, res) {
   res.json({
-    status: "ok"
+    status: "ok test4"
   });
 });
 

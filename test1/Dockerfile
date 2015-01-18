@@ -9,8 +9,8 @@ EXPOSE  3000
 CMD ["/bin/bash"]
 
 
-# docker build -t helxsz/node-dev:0.1 .
-# docker run -it --rm -p 8080:3000 -v `pwd`:/src helxsz/node-dev:0.1
+# docker build -t test1 .
+# docker run -it --rm -p 8080:3000 -v `pwd`:/src test1
 
 # npm install
 # node app.js
