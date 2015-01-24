@@ -31,7 +31,7 @@ var express = require('express'),
 
 
 var opts = { server: { auto_reconnect: false,poolSize: 10 }, user: '', pass: '',replset: { strategy: 'ping', rs_name: 'testSet' } };
-mongoose.connect('mongodb://localhost/food_production',opts,function(err){
+mongoose.connect('mongodb://mongodb/food_production',opts,function(err){
   if(err) { 
       console.log('connect mongodb error'+" "+err.name+" "+ err.errmsg);
     if(err.name == 'MongoError' && err.code == 18 && err.errmsg == 'auth fails'){
@@ -48,7 +48,7 @@ mongoose.connection.on('open', function (err) {
 
 
 
-var redisClient = require('redis').createClient(6379,'localhost');
+var redisClient = require('redis').createClient(6379,'redis');
 redisClient.on('connect',function(err){
    console.log('connect redis');
 })
