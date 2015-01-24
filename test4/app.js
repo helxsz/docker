@@ -1,23 +1,59 @@
+console.log("hello log");
+/*
+var express = require('express');
+
+console.log("hello log");
+
+var app = express();
+
+app.get('/', function(req, res){
+  res.send('hello world');
+});
+
+//app.set('trust proxy', 'loopback') 
+app.listen(3000);
+
+
+var redisClient = require('redis').createClient(6379,'localhost');
+redisClient.on('connect',function(err){
+   console.log('connect redis');
+})
+*/
+/**/
+
+
 var express = require('express'),
     app = express(),
     redis = require('redis'),
-    RedisStore = require('connect-redis')(express),
+    mongoose = require('mongoose'),
     server = require('http').createServer(app);
 
-app.configure(function() {
-  app.use(express.cookieParser('keyboard-cat'));
-  app.use(express.session({
-        store: new RedisStore({
-            host: process.env.REDIS_HOST || 'localhost',
-            port: process.env.REDIS_PORT || 6379,
-            db: process.env.REDIS_DB || 0
-        }),
-        cookie: {
-            expires: false,
-            maxAge: 30 * 24 * 60 * 60 * 1000
-        }
-    }));
+
+
+var opts = { server: { auto_reconnect: false,poolSize: 10 }, user: '', pass: '',replset: { strategy: 'ping', rs_name: 'testSet' } };
+mongoose.connect('mongodb://localhost/food_production',opts,function(err){
+  if(err) { 
+      console.log('connect mongodb error'+" "+err.name+" "+ err.errmsg);
+    if(err.name == 'MongoError' && err.code == 18 && err.errmsg == 'auth fails'){
+         
+    }else{
+    } 
+  }
+  else console.log('mongodb connect success');
 });
+
+mongoose.connection.on('open', function (err) {
+      console.log('connection opening');
+});
+
+
+
+var redisClient = require('redis').createClient(6379,'localhost');
+redisClient.on('connect',function(err){
+   console.log('connect redis');
+})
+
+
 
 app.get('/', function(req, res) {
   res.json({
